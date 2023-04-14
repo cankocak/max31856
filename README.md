@@ -1,5 +1,6 @@
 # max31856
 max31856 library to be used with STM32 HAL library (targeted to be used with STM32CubeMX projects)
+Written by Can Kocak. BSD license, check LICENSE for more information All text above must be included in any redistribution
 
 ## Usage:
 ```
@@ -20,5 +21,3 @@ if (therm.sr.val) {
 }
 float temp = max31856_read_TC_temp(&therm);
 ```
-
-Written by Can Kocak. BSD license, check LICENSE for more information All text above must be included in any redistribution
