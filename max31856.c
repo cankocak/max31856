@@ -74,10 +74,15 @@ void max31856_set_average_samples(max31856_t *max31856, max31856_sampling_t samp
 
 float max31856_read_TC_temp(max31856_t *max31856)
 {
-    uint8_t raw_val[3] = {};
+    uint8_t raw_val[3] = { 0 };
     max31856_read_nregisters(max31856, MAX31856_LTCBH, raw_val, 3);
-    int32_t raw_val_signed = (raw_val[0] << 16) | (raw_val[1] << 8) | raw_val[0];
-    // First 5 bits aren't unused
+    int32_t raw_val_signed = (raw_val[0] << 16) | (raw_val[1] << 8) | raw_val[2];
+    // and compute temperature
+    if (raw_val_signed & 0x800000) {
+    	raw_val_signed |= 0xFF000000; // fix sign
+    }
+	
+	// First 5 bits aren't unused
     raw_val_signed >>= 5;
     return raw_val_signed * 0.0078125;
 }
